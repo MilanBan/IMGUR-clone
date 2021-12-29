@@ -7,13 +7,13 @@ use Core\App;
 class UserModel extends Model
 {
 
-    public array $errors = [];
-    public array $data = [];
+    protected array $errors = [];
+    protected array $data = [];
     public string $username;
     public string $email;
     public string $password;
     public string $password_confirm;
-    public $db;
+    protected $db;
     protected $pdo;
 
 
@@ -47,8 +47,8 @@ class UserModel extends Model
 
     public function validate(): array
     {
-        if (empty($this->username)){
-            $this->errors['username'] = 'Username is required';
+        if (empty($this->username) || strlen($this->username) < 2){
+            $this->errors['username'] = 'Username is required and must be at least 2 characters long';
         }
         if (!filter_var($this->email, FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = 'Email is not valid';

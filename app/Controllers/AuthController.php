@@ -9,8 +9,7 @@ class AuthController extends Controller
 
     public function home()
     {
-        $data = $this->userModel->getAll();
-        $this->renderView('Home', $data);
+        $this->renderView('Home');
     }
 
     public function register()
@@ -31,10 +30,10 @@ class AuthController extends Controller
                 ];
                 $user = new UserModel($data['username'], $data['email'], $data['password'], $data['password_confirm']);
                 $errors = $user->validate();
-var_dump($errors);
+
                 if (count($errors)) {
                     http_response_code(422);
-                    echo 'errors';
+                    $this->renderView('Register', ['errors' => $errors, 'user' => $user]);
                 }else{
                     $user->insert();
                     http_response_code(201);
