@@ -29,7 +29,7 @@ class AuthController extends Controller
                     "password_confirm" => trim($_POST["password_confirm"]),
                 ];
                 $user = new UserModel($data['username'], $data['email'], $data['password'], $data['password_confirm']);
-                $errors = $user->validate();
+                $errors = $user->validate('register');
 
                 if (count($errors)) {
                     http_response_code(422);
@@ -41,6 +41,32 @@ class AuthController extends Controller
                 }
             }
         }
+    }
 
+    public function login()
+    {
+        if (strtolower($_SERVER["REQUEST_METHOD"]) === "get") {
+            $this->renderView('Login');
+        }
+
+        if (strtolower($_SERVER["REQUEST_METHOD"]) === "post") {
+            if (isset($_POST['email']) && isset($_POST['password'])){
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+                $data = [
+                    "email" => trim($_POST["email"]),
+                    "password" => trim($_POST["password"]),
+                ];
+                $user = new UserModel('', $data['email'], $data['password'], '');
+                $errors = $user->validate('login');
+                if (count($errors)) {
+                    http_response_code(422);
+                    $this->renderView('Login', ['errors' => $errors, 'user' => $user]);
+                }else{
+                    http_response_code(200);
+                    $this->renderView('Home', $data);
+                }
+            }
+        }
     }
 }

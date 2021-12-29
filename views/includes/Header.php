@@ -26,7 +26,7 @@
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="#">Login <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/register">register</a>
