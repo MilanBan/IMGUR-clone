@@ -2,12 +2,44 @@
 
 namespace Core\Database;
 
+use PDOException;
+
 class QueryBuilder
 {
-    protected $pdo;
+    public $pdo;
 
     public function __construct($pdo)
     {
         $this->pdo = $pdo;
     }
+
+    public function insert(string $table, array $parameters)
+    {
+        $sql = sprintf('INSERT INTO %s (%s) VALUES (%s)',
+            $table,
+            implode(', ', array_keys($parameters)),
+            ':' . implode(', :', array_keys($parameters))
+        );
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($parameters);
+
+            return $this->pdo->lastInsertId();
+        } catch (PDOException $e) {
+            return false;
+        }
+    }
+
+    public function find(string $table, array $parameter)
+    {
+        $sql = sprintf("SELECT * FROM `%s` WHERE `%s` = '%s'",
+            $table,
+            $parameter[0],
+            $parameter[1],
+        );
+        return $this->pdo->query($sql)->fetch();
+    }
+
+
 }
