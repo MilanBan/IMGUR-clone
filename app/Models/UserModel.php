@@ -38,8 +38,17 @@ class UserModel extends Model
             'role' => 'user'
         ];
 
-        $this->db->insert('user', $this->data);
+        $userID = $this->db->insert('user', $this->data);
+
+        return $this->find('user', ['id', $userID]);
     }
+
+    public function find(string $table, array $parameter)
+    {
+
+        return $this->db->find($table, $parameter);
+    }
+
 
     public function validate($mode = []): array
     {
@@ -61,7 +70,7 @@ class UserModel extends Model
         return $this->errors;
     }
 
-    public function validateUsername()
+    private function validateUsername()
     {
         if (empty($this->username)){
             $this->errors['username'] = 'Username is required';
@@ -74,7 +83,7 @@ class UserModel extends Model
         }
     }
 
-    public function validateEmail()
+    private function validateEmail()
     {
         if (empty($this->email)){
             $this->errors['email'] = 'Email is required';
@@ -84,21 +93,21 @@ class UserModel extends Model
         }
     }
 
-    public function validateEmailExist()
+    private function validateEmailExist()
     {
         if ($this->pdo->query("SELECT `email` FROM `user` WHERE `email` = '$this->email'")->rowCount()) {
             $this->errors['email'] = "User with $this->email email address is already registered";
         }
     }
 
-    public function validateUserExist()
+    private function validateUserExist()
     {
         if ($this->pdo->query("SELECT `email`,`password` FROM `user` WHERE `email` = '$this->email' AND `password` = '$this->password'")->fetch()) {
             $this->errors['user'] = "User with $this->email email and $this->username does not exists";
         }
     }
 
-    public function validatePassword()
+    private function validatePassword()
     {
         if (empty($this->password)){
             $this->errors['password'] = 'Password is required';
@@ -108,7 +117,7 @@ class UserModel extends Model
         }
     }
 
-    public function validatePasswordMatching()
+    private function validatePasswordMatching()
     {
         if (empty($this->password_confirm)){
             $this->errors['password_confirm'] = 'Password confirming is required';

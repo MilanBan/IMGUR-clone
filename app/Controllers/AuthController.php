@@ -28,16 +28,16 @@ class AuthController extends Controller
                     "password" => trim($_POST["password"]),
                     "password_confirm" => trim($_POST["password_confirm"]),
                 ];
-                $user = new UserModel($data['username'], $data['email'], $data['password'], $data['password_confirm']);
-                $errors = $user->validate('register');
+                $userM = new UserModel($data['username'], $data['email'], $data['password'], $data['password_confirm']);
+                $errors = $userM->validate('register');
 
                 if (count($errors)) {
                     http_response_code(422);
-                    $this->renderView('Register', ['errors' => $errors, 'user' => $user]);
+                    $this->renderView('Register', ['errors' => $errors, 'user' => $userM]);
                 }else{
-                    $user->insert();
+                    $user = $userM->insert();
                     http_response_code(201);
-                    $this->renderView('Home', $data);
+                    $this->renderView('Home', ['user' => $user]);
                 }
             }
         }

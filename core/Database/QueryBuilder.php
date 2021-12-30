@@ -25,11 +25,20 @@ class QueryBuilder
             $stmt = $this->pdo->prepare($sql);
             $stmt->execute($parameters);
 
-            return true;
-
+            return $this->pdo->lastInsertId();
         } catch (PDOException $e) {
             return false;
         }
+    }
+
+    public function find(string $table, array $parameter)
+    {
+        $sql = sprintf("SELECT * FROM `%s` WHERE `%s` = '%s'",
+            $table,
+            $parameter[0],
+            $parameter[1],
+        );
+        return $this->pdo->query($sql)->fetch();
     }
 
 
