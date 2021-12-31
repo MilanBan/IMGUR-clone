@@ -20,12 +20,10 @@ class GuestController extends Controller
 
         if (Session::get('user')) {
             echo 'logovan';
-        }else{
-            echo 'ne ulogovan';
+        }else {
+            $images = $this->imageM->guest_getAll();
+            $this->renderView('Home', ['images' => $images]);
         }
-
-        $images = $this->imageM->guest_getAll();
-        $this->renderView('Home', ['images' => $images]);
     }
 
     public function show($slug)
