@@ -21,7 +21,7 @@
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">About</a>
+                <a class="nav-link" href="test">Test</a>
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">

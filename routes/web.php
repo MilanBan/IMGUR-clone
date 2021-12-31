@@ -14,4 +14,7 @@ $router->post('/register', '\App\Controllers\AuthController@register');
 $router->get('/login', '\App\Controllers\AuthController@login');
 $router->post('/login', '\App\Controllers\AuthController@login');
 
+$router->get('/test', '\App\Controllers\GuestController@index');
+$router->get('/test/{$slug}', '\App\Controllers\GuestController@show');
+
 $router->run();

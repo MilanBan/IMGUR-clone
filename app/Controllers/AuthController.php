@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Models\UserModel;
+use Core\Session;
 
 class AuthController extends Controller
 {
@@ -36,6 +37,7 @@ class AuthController extends Controller
                     $this->renderView('Register', ['errors' => $errors, 'user' => $userM]);
                 }else{
                     $user = $userM->insert();
+                    Session::set('user', $user);
                     http_response_code(201);
                     $this->renderView('Home', ['user' => $user]);
                 }
@@ -57,14 +59,18 @@ class AuthController extends Controller
                     "email" => trim($_POST["email"]),
                     "password" => trim($_POST["password"]),
                 ];
-                $user = new UserModel('', $data['email'], $data['password'], '');
-                $errors = $user->validate('login');
+                $userM = new UserModel('', $data['email'], $data['password'], '');
+                $errors = $userM->validate('login');
                 if (count($errors)) {
                     http_response_code(422);
-                    $this->renderView('Login', ['errors' => $errors, 'user' => $user]);
+                    $this->renderView('Login', ['errors' => $errors, 'user' => $userM]);
                 }else{
+                    $user = $userM->find('user', ['email', $userM->email]);
+                    Session::set('user', $user);
+
                     http_response_code(200);
-                    $this->renderView('Home', $data);
+                    Session::setFlash('success', "Welcome $user->username from session");
+                    $this->renderView('Home', ['user' => $user]);
                 }
             }
         }
