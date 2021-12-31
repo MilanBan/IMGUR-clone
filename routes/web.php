@@ -4,7 +4,7 @@ use Bramus\Router\Router;
 
 $router = new Router();
 
-$router->get('/', function() {
+$router->get('/test', function() {
     echo 'Home route form router';
 });
 
@@ -13,5 +13,8 @@ $router->get('/register', '\App\Controllers\AuthController@register');
 $router->post('/register', '\App\Controllers\AuthController@register');
 $router->get('/login', '\App\Controllers\AuthController@login');
 $router->post('/login', '\App\Controllers\AuthController@login');
+
+$router->get('/', '\App\Controllers\GuestController@index');
+$router->get('/images/{$slug}', '\App\Controllers\GuestController@show');
 
 $router->run();

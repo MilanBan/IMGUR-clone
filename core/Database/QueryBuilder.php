@@ -31,15 +31,27 @@ class QueryBuilder
         }
     }
 
-    public function find(string $table, array $parameter)
+    public function find(string $table, array $parameters)
     {
         $sql = sprintf("SELECT * FROM `%s` WHERE `%s` = '%s'",
             $table,
-            $parameter[0],
-            $parameter[1],
+            $parameters[0],
+            $parameters[1],
         );
         return $this->pdo->query($sql)->fetch();
     }
+
+    public function get(array $parameters, string $table, int $limit, int $offset)
+    {
+        $sql = sprintf("SELECT `%s` FROM `%s` LIMIT %s OFFSET %s",
+            implode("`, `", $parameters),
+            $table,
+            $limit,
+            $offset
+        );
+        return $this->pdo->query($sql)->fetchAll();
+    }
+
 
 
 }
