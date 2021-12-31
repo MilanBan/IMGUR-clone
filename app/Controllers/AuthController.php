@@ -69,8 +69,7 @@ class AuthController extends Controller
                     Session::set('user', $user);
 
                     http_response_code(200);
-                    Session::setFlash('success', "Welcome $user->username from session");
-                    $this->renderView('Home', ['user' => $user]);
+                    $this->redirect('profile/'. Session::get('user')->id);
                 }
             }
         }

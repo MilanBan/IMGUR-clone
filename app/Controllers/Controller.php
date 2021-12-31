@@ -20,4 +20,10 @@ class Controller
         else
             echo "404 | Page not found";
     }
+
+    public function redirect($page)
+    {
+        header('Location: ' . ROOT_URL . "/$page");
+
+    }
 }

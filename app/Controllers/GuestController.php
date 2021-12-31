@@ -34,7 +34,7 @@ class GuestController extends Controller
             return $this->renderView('Home',['image' => $image]);
         }
 
-        echo 'Image not found';
+        die('Image not found');
     }
 
 

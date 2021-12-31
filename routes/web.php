@@ -17,4 +17,7 @@ $router->post('/login', '\App\Controllers\AuthController@login');
 $router->get('/', '\App\Controllers\GuestController@index');
 $router->get('/images/{$slug}', '\App\Controllers\GuestController@show');
 
+$router->get('/profile/{$id}', '\App\Controllers\ProfileController@index');
+
+
 $router->run();
