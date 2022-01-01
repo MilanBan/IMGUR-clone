@@ -20,8 +20,7 @@ class UserModel extends Model
 
     public function __construct($username = null, $email = null, $password = null, $password_confirm = null)
     {
-        $this->db = App::get('database');
-        $this->pdo = $this->db->pdo;
+        parent::__construct();
         $this->username = $username ?? '';
         $this->email = $email ?? '';
         $this->password = $password ?? '';

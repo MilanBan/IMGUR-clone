@@ -26,21 +26,29 @@ class ImageModel extends Model
             $parameter[0],
             $parameter[1]
         );
-
-        return $this->pdo->query($sql)->fetch();
+        $image = $this->pdo->query($sql)->fetch();
+        return $image;
     }
     // Auth User
     public function getAll($id)
     {
+        var_dump('usao u IM get all id='.$id);
         Session::start();
 
         if (Session::get('user')){
-            $sql = "SELECT i.`file_name`, i.`slug`, u.`username` FROM `image` i Left JOIN `user` u ON i.`user_id` = u.`id` WHERE u.`id` = 1 
-                    UNION
-                    SELECT i.`file_name`, i.`slug`, u.`username` FROM `image` i left JOIN `user` u ON i.`user_id` = u.`id` WHERE i.`hidden` = 0 
-                    limit 10 offset 1";
+            $sql = "SELECT i.`file_name`, i.`slug`, u.`username` FROM `image` i left JOIN `user` u ON i.`user_id` = u.`id` WHERE u.`id` =  $id limit 10 offset 0";
 
             return $this->pdo->query($sql)->fetchAll();
         }
+    }
+
+    public function find(array $parameter)
+    {
+        var_dump('usao u IM find u image model');
+        $sql = sprintf("SELECT * FROM `image` WHERE `%s` = '%s'",
+            $parameter[0],
+            $parameter[1]
+        );
+        return $this->pdo->query($sql)->fetch();
     }
 }

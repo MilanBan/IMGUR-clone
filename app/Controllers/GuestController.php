@@ -11,15 +11,16 @@ class GuestController extends Controller
 
     public function __construct()
     {
+        parent::__construct();
         $this->imageM = new ImageModel();
     }
 
     public function index()
     {
-        Session::start();
+//        Session::start();
 
         if (Session::get('user')) {
-            echo 'logovan';
+            $this->redirect('profile/'. Session::get('user')->id);
         }else {
             $images = $this->imageM->guest_getAll();
             $this->renderView('Home', ['images' => $images]);
@@ -33,8 +34,6 @@ class GuestController extends Controller
         if ($image){
             return $this->renderView('Home',['image' => $image]);
         }
-
-        die('Image not found');
     }
 
 

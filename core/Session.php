@@ -50,6 +50,7 @@ class Session {
 
     public static function destroy(){
         if(self::$starter){
+            self::$starter =false;
             session_unset();
             session_destroy();
         }

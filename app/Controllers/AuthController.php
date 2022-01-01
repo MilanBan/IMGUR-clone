@@ -8,6 +8,11 @@ use Core\Session;
 class AuthController extends Controller
 {
 
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
     public function home()
     {
         $this->renderView('Home');
@@ -39,7 +44,7 @@ class AuthController extends Controller
                     $user = $userM->insert();
                     Session::set('user', $user);
                     http_response_code(201);
-                    $this->renderView('Home', ['user' => $user]);
+                    $this->redirect('profile/'. Session::get('user')->id);
                 }
             }
         }
@@ -73,5 +78,11 @@ class AuthController extends Controller
                 }
             }
         }
+    }
+
+    public function logout()
+    {
+        Session::destroy();
+        $this->redirect('');
     }
 }
