@@ -21,9 +21,9 @@ class Controller
             echo "404 | Page not found";
     }
 
-    public function redirect($page)
+    public function redirect($view)
     {
-        header('Location: ' . ROOT_URL . "/$page");
+        header('Location: ' . ROOT_URL . "/$view");
 
     }
 }

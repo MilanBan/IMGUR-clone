@@ -10,11 +10,10 @@ class ImageModel extends Model
 
     public function __construct()
     {
-        $this->db = App::get('database');
-        $this->pdo = $this->db->pdo;
+        parent::__construct();
     }
     // Guest
-    public function guest_getAll()
+    public function getAll()
     {
        $sql = "SELECT i.`file_name`, i.`slug`, u.`username` FROM `image` i INNER JOIN `user` u ON i.`user_id` = u.`id` WHERE i.`nsfw` = 0 AND i.`hidden` = 0 ORDER BY i.`id` desc LIMIT 10 OFFSET 1";
        return $this->pdo->query($sql)->fetchAll();
@@ -26,11 +25,10 @@ class ImageModel extends Model
             $parameter[0],
             $parameter[1]
         );
-        $image = $this->pdo->query($sql)->fetch();
-        return $image;
+        return $this->pdo->query($sql)->fetch();
     }
     // Auth User
-    public function getAll($id)
+    public function getAllFromUser($id)
     {
         var_dump('usao u IM get all id='.$id);
         Session::start();
@@ -42,13 +40,15 @@ class ImageModel extends Model
         }
     }
 
-    public function find(array $parameter)
+    public function findFromUser(array $parameter)
     {
-        var_dump('usao u IM find u image model');
-        $sql = sprintf("SELECT * FROM `image` WHERE `%s` = '%s'",
+        var_dump('usao u IM find u image model : ');
+        $sql = sprintf("SELECT * FROM `image` WHERE `%s` = '%s' AND `user_id` = %s",
             $parameter[0],
-            $parameter[1]
+            $parameter[1],
+            Session::get('user')->id
         );
+        var_dump($sql);
         return $this->pdo->query($sql)->fetch();
     }
 }

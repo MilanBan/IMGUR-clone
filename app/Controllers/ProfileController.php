@@ -24,7 +24,7 @@ class ProfileController extends Controller
         if ($id)
         {
             $user = $this->userM->find('user', ['id', $id]);
-            $images= $this->imageM->getAll($id) ?? null;
+            $images= $this->imageM->getAllFromUser($id) ?? null;
 
         }else{
             echo ' nije poslat id u profile crtl';
@@ -37,7 +37,7 @@ class ProfileController extends Controller
     {
 
         var_dump("usao u show p-crtl");
-        $image = $this->imageM->find(['slug', $slug]);
+        $image = $this->imageM->findFromUser(['slug', $slug]);
 
         if (!$image){
             echo 'nema slike';

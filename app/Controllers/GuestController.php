@@ -17,14 +17,9 @@ class GuestController extends Controller
 
     public function index()
     {
-//        Session::start();
+        $images = $this->imageM->getAll();
 
-        if (Session::get('user')) {
-            $this->redirect('profile/'. Session::get('user')->id);
-        }else {
-            $images = $this->imageM->guest_getAll();
-            $this->renderView('Home', ['images' => $images]);
-        }
+        $this->renderView('Home', ['images' => $images]);
     }
 
     public function show($slug)
