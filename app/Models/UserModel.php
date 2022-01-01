@@ -18,14 +18,13 @@ class UserModel extends Model
     protected string $mode;
 
 
-    public function __construct($username = null, $email, $password, $password_confirm = null)
+    public function __construct($username = null, $email = null, $password = null, $password_confirm = null)
     {
-        $this->db = App::get('database');
-        $this->pdo = $this->db->pdo;
-        $this->username = $username;
-        $this->email = $email;
-        $this->password = $password;
-        $this->password_confirm = $password_confirm;
+        parent::__construct();
+        $this->username = $username ?? '';
+        $this->email = $email ?? '';
+        $this->password = $password ?? '';
+        $this->password_confirm = $password_confirm ?? '';
     }
 
     public function insert()

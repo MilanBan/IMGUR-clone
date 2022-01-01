@@ -20,6 +20,9 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/profile/<?= \Core\Session::get('user')->id; ?>">Profile <span class="sr-only">(current)</span></a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/test">Test</a>
             </li>
@@ -28,12 +31,22 @@
             </li>
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
+            <?php if (\Core\Session::get('user')): ?>
             <li class="nav-item active">
-                <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item">
-                <a class="nav-link" href="/register">register</a>
-            </li>
+            <?php else: ?>
+                <li class="nav-item active">
+                    <?php if ($_SERVER['REQUEST_URI'] !== '/login'): ?>
+                        <a class="nav-link" href="/login">Login <span class="sr-only">(current)</span></a>
+                    <?php endif ?>
+                </li>
+                <li class="nav-item active">
+                    <?php if ($_SERVER['REQUEST_URI'] !== '/register'): ?>
+                        <a class="nav-link" href="/register">Register</a>
+                    <?php endif ?>
+                </li>
+            <?php endif ?>
         </ul>
     </div>
 </nav>
