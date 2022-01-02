@@ -13,24 +13,31 @@ require __DIR__ . '/includes/Header.php'
         <h1>User: <?= $data['user']->username; ?></h1>
         <h1>Email: <?= $data['user']->email; ?></h1>
     <?php endif; ?>
-</div>
 <div class="container-fluid">
-    <div class="d-flex flex-wrap justify-content-center">
-        <?php if (isset($data['image'])) : ?>
-            <img class="img-fluid rounded" src="<?= $data['image']->file_name ?>">
-        <?= print_r($data['image']) ?>
-        <?php endif; ?>
-
-        <?php if (isset($data['images'])) : ?>
-        <?php foreach ($data['images'] as $image) : ?>
-            <div class="d-flex flex-column">
-                <a class="mx-auto" href="http://localhost:8080/profile/images/<?= $image->slug ?> ">
-                    <img class="img-fluid rounded" src="<?= $image->file_name ?>">
-                </a>
-            </div>
+    <div class="d-flex flex-wrap justify-content-start">
+        <?php if (isset($data['galleries'])) : ?>
+            <table class="table table-hover table-bordered w-50">
+                <thead>
+                <tr>
+                    <th scope="col">
+                        Gallery name
+                    </th>
+                </tr>
+                </thead>
+                <tbody>
+        <?php foreach ($data['galleries'] as $gallery) : ?>
+                <tr>
+                    <th scope="row">
+                        <a class="mx-auto" href="http://localhost:8080/profile/galleries/<?= $gallery->slug ?> ">
+                            <?= $gallery->name ?>
+                        </a>
+                    </th>
+                </tr>
         <?php endforeach; ?>
+                </tbody>
+            </table>
     <?php endif; ?>
     </div>
 </div>
-
+</div>
 <?php require __DIR__ . '/includes/Footer.php'?>
