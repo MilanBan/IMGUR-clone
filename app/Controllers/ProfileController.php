@@ -4,7 +4,6 @@ namespace App\Controllers;
 
 use App\Models\GalleryModel;
 use App\Models\UserModel;
-use Core\Session;
 
 class ProfileController extends Controller
 {
@@ -25,7 +24,6 @@ class ProfileController extends Controller
         {
             $user = $this->userM->find('user', ['id', $id]);
             $galleries = $this->galleryM->getAllFromUser($id) ?? null;
-            var_dump($galleries);
 
         }else{
             echo ' nije poslat id u profile crtl';
@@ -37,7 +35,7 @@ class ProfileController extends Controller
     public function show($slug)
     {
 
-        var_dump("usao u show p-crtl");
+        var_dump("usao u show p-crtl: ".$slug);
         $image = $this->imageM->findFromUser(['slug', $slug]);
 
         if (!$image){

@@ -17,6 +17,8 @@ class GuestController extends Controller
 
     public function index()
     {
+        var_dump('usao u index guest-ctrl');
+
         $images = $this->imageM->getAll();
 
         $this->renderView('Home', ['images' => $images]);
@@ -24,8 +26,9 @@ class GuestController extends Controller
 
     public function show($slug)
     {
-        $image = $this->imageM->guest_find(['slug', $slug]);
+        var_dump('usao u show guest-ctrl');
 
+        $image = $this->imageM->guest_find(['slug', $slug]);
         if ($image){
             return $this->renderView('Home',['image' => $image]);
         }

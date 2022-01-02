@@ -13,7 +13,7 @@ require __DIR__ . '/includes/Header.php'
         <h1>User: <?= $data['user']->username; ?></h1>
         <h1>Email: <?= $data['user']->email; ?></h1>
     <?php endif; ?>
-<div class="container-fluid">
+  <div class="container-fluid">
     <div class="d-flex flex-wrap justify-content-start">
         <?php if (isset($data['galleries'])) : ?>
             <table class="table table-hover table-bordered w-50">
@@ -28,7 +28,7 @@ require __DIR__ . '/includes/Header.php'
         <?php foreach ($data['galleries'] as $gallery) : ?>
                 <tr>
                     <th scope="row">
-                        <a class="mx-auto" href="http://localhost:8080/profile/galleries/<?= $gallery->slug ?> ">
+                        <a class="mx-auto" href="http://localhost:8080/galleries/<?= $gallery->slug ?> ">
                             <?= $gallery->name ?>
                         </a>
                     </th>
@@ -36,8 +36,8 @@ require __DIR__ . '/includes/Header.php'
         <?php endforeach; ?>
                 </tbody>
             </table>
-    <?php endif; ?>
+        <?php endif; ?>
     </div>
-</div>
+  </div>
 </div>
 <?php require __DIR__ . '/includes/Footer.php'?>
