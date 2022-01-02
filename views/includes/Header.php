@@ -20,7 +20,7 @@
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/profile/<?= \Core\Session::get('user')->id; ?>">Profile <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/profile/<?= \Core\Session::get('username'); ?>">Profile <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/test">Test</a>

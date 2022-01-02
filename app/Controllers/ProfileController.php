@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\GalleryModel;
 use App\Models\UserModel;
+use Core\Session;
 
 class ProfileController extends Controller
 {
@@ -17,31 +18,14 @@ class ProfileController extends Controller
         $this->galleryM = new GalleryModel();
     }
 
-    public function index($id)
+    public function index($username)
     {
-        var_dump('usao u index p-ctrl: '.$id);
-        if ($id)
-        {
-            $user = $this->userM->find('user', ['id', $id]);
-            $galleries = $this->galleryM->getAllFromUser($id) ?? null;
+        var_dump('usao u index p-ctrl: '.$username);
 
-        }else{
-            echo ' nije poslat id u profile crtl';
-        }
+        $user = $this->userM->find('user', ['username', Session::get('user')->username]);
+        $galleries = $this->galleryM->getAllFromUser($user->id) ?? null;
 
         return $this->renderView('Profile', ['user' => $user, 'galleries' => $galleries]);
     }
 
-    public function show($slug)
-    {
-
-        var_dump("usao u show p-crtl: ".$slug);
-        $image = $this->imageM->findFromUser(['slug', $slug]);
-
-        if (!$image){
-            echo 'nema slike';
-        }
-
-        return $this->renderView('Profile',['image' => $image]);
-    }
 }

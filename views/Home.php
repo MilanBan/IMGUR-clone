@@ -23,9 +23,11 @@ require __DIR__ . '/includes/Header.php'
         <?php if (isset($data['images'])) : ?>
         <?php foreach ($data['images'] as $image) : ?>
             <div class="d-flex flex-column">
+                <div class="d-flex m-3">
                     <a class="mx-auto" href="http://localhost:8080/<?= $image->slug ?> ">
                         <img class="img-fluid rounded" src="<?= $image->file_name ?>">
                     </a>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

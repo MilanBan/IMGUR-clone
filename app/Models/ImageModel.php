@@ -62,4 +62,14 @@ class ImageModel extends Model
 
         return $this->pdo->query($sql)->fetch();
     }
+
+    public function findImage(array $parameter)
+    {
+        $sql = sprintf("SELECT * FROM `image` WHERE `%s` = '%s'",
+            $parameter[0],
+            $parameter[1],
+        );
+
+        return $this->pdo->query($sql)->fetch();
+    }
 }
