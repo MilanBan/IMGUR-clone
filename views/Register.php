@@ -1,4 +1,3 @@
-<?php require __DIR__ . '/includes/Header.php'?>
 
 <div class="d-flex justify-content-center mt-5 ">
 <form action="/register" method="post">
@@ -51,4 +50,3 @@
 </form>
 </div>
 
-<?php require __DIR__ . '/includes/Footer.php' ?>

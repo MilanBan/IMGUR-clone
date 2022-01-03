@@ -2,8 +2,6 @@
 
 use Core\Session;
 
-require __DIR__ . '/includes/Header.php'
-
 ?>
 <h1>THIS IS USER GALLERY PAGE</h1>
 <h1 class="display-1 text-center m-5"><?= $data['gallery']->name; ?></h1>
@@ -25,5 +23,3 @@ require __DIR__ . '/includes/Header.php'
         <?php endif; ?>
     </div>
 </div>
-
-<?php require __DIR__ . '/includes/Footer.php'?>

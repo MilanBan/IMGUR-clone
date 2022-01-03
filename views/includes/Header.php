@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="data:,">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -19,9 +20,11 @@
             <li class="nav-item active">
                 <a class="nav-link" href="/home">Home <span class="sr-only">(current)</span></a>
             </li>
-            <li class="nav-item active">
-                <a class="nav-link" href="/profile/<?= \Core\Session::get('username'); ?>">Profile <span class="sr-only">(current)</span></a>
-            </li>
+            <?php if (\Core\Session::get('user')): ?>
+                <li class="nav-item active">
+                    <a class="nav-link" href="/profile/<?= \Core\Session::get('username'); ?>">Profile <span class="sr-only">(current)</span></a>
+                </li>
+            <?php endif; ?>
             <li class="nav-item">
                 <a class="nav-link" href="/test">Test</a>
             </li>

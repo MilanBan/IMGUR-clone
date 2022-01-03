@@ -1,7 +1,5 @@
 <?php
 
-require __DIR__ . '/includes/Header.php'
-
 ?>
     <h1>THIS IS IMAGE PAGE</h1>
     <h1 class="text-center m-5"><?= $data['image']->file_name; ?></h1>
@@ -18,5 +16,3 @@ require __DIR__ . '/includes/Header.php'
             <?php endif; ?>
         </div>
     </div>
-
-<?php require __DIR__ . '/includes/Footer.php'?>

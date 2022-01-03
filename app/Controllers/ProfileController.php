@@ -25,7 +25,7 @@ class ProfileController extends Controller
         $user = $this->userM->find('user', ['username', Session::get('user')->username]);
         $galleries = $this->galleryM->getAllFromUser($user->id) ?? null;
 
-        return $this->renderView('Profile', ['user' => $user, 'galleries' => $galleries]);
+        return $this->renderView('profile/show', ['user' => $user, 'galleries' => $galleries]);
     }
 
 }

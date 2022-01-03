@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\ImageModel;
 use Core\Session;
+use mysql_xdevapi\Exception;
 
 class GuestController extends Controller
 {
@@ -27,10 +28,9 @@ class GuestController extends Controller
     public function show($slug)
     {
         var_dump('usao u show guest-ctrl');
-
         $image = $this->imageM->guest_find(['slug', $slug]);
-        if ($image){
-            return $this->renderView('Home',['image' => $image]);
+        if ($image) {
+            return $this->renderView('Home', ['image' => $image]);
         }
     }
 

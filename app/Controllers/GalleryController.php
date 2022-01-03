@@ -21,9 +21,8 @@ class GalleryController extends Controller
     {
         var_dump('usao u show g-ctrl: slug='.$slug);
         $gallery = $this->galleryM->findFromUser(['slug', $slug]) ?? null;
-
         $images = $this->imagesM->getAllFromGallery($gallery->id);
 
-        return $this->renderView('Gallery', ['gallery' => $gallery, 'images' => $images]);
+        return $this->renderView('gallery/show', ['gallery' => $gallery, 'images' => $images]);
     }
 }

@@ -18,6 +18,6 @@ class ImageController extends Controller
     {
         $image = $this->imageM->findImage(['slug', $slug]);
 
-        $this->renderView('Image', ['image' => $image]);
+        $this->renderView('image/show', ['image' => $image]);
     }
 }

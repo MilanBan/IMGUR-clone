@@ -2,8 +2,6 @@
 
 use Core\Session;
 
-require __DIR__ . '/includes/Header.php'
-
 ?>
 
 <div class="container">
@@ -34,4 +32,3 @@ require __DIR__ . '/includes/Header.php'
     </div>
 </div>
 
-<?php require __DIR__ . '/includes/Footer.php'?>
