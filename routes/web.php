@@ -15,7 +15,6 @@ $router->get('/login', '\App\Controllers\AuthController@login');
 $router->post('/login', '\App\Controllers\AuthController@login');
 $router->get('/logout', '\App\Controllers\AuthController@logout');
 
-$router->get('/home', '\App\Controllers\AuthController@home');
 // Image
 $router->get('/images/{$slug}', '\App\Controllers\ImageController@show');
 
@@ -23,10 +22,11 @@ $router->get('/images/{$slug}', '\App\Controllers\ImageController@show');
 $router->get('/profile/{$username}', '\App\Controllers\ProfileController@index');
 
 // Gallery
+$router->get('/galleries/{$slug}/edit', '\App\Controllers\GalleryController@edit');
+$router->post('/galleries/{$id}/update', '\App\Controllers\GalleryController@update');
 $router->get('/galleries/{$slug}', '\App\Controllers\GalleryController@show');
 
 // Guest
 $router->get('/', '\App\Controllers\GuestController@index');
-$router->get('/{$slug}', '\App\Controllers\GuestController@show');
 
 $router->run();

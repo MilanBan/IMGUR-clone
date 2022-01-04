@@ -3,9 +3,21 @@
 use Core\Session;
 
 ?>
-<h1>THIS IS USER GALLERY PAGE</h1>
-<h1 class="display-1 text-center m-5"><?= $data['gallery']->name; ?></h1>
-<p class="text-center m-5"><?= $data['gallery']->description; ?></p>
+
+<?php if (isset($data['gallery'])) : ?>
+<div class="border-bottom rounded-pill">
+    <h1 class="text-center m-5">Gallery: <strong><?= $data['gallery']->name; ?></strong></h1>
+    <p class="text-center m-3"><?= $data['gallery']->description; ?></p>
+    <?php if (Session::get('user')->id == $data['gallery']->user_id || in_array(Session::get('user')->role, ['moderator', 'admin'])) : ?>
+        <div class="btn-group d-flex justify-content-around m-5">
+            <a class="btn btn-sm btn-warning" href="/galleries/<?= $data['gallery']->slug . '/edit' ?>">Edit</a>
+            <?php if (Session::get('user')->id == $data['gallery']->user_id || Session::get('user')->role != 'moderator') : ?>
+                <a class="btn btn-sm btn-danger" href="#">X</a>
+            <?php endif; ?>
+        </div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
 <div class="container-fluid">
     <div class="d-flex flex-wrap justify-content-center">
         <?php if (isset($data['images'])) : ?>

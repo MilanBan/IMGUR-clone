@@ -23,6 +23,12 @@ class ProfileController extends Controller
         var_dump('usao u index p-ctrl: '.$username);
 
         $user = $this->userM->find('user', ['username', Session::get('user')->username]);
+        if (!$user){
+            Session::set('error', 'User not found');
+            http_response_code(404);
+            $this->renderView('__404');
+        }
+
         $galleries = $this->galleryM->getAllFromUser($user->id) ?? null;
 
         return $this->renderView('profile/show', ['user' => $user, 'galleries' => $galleries]);

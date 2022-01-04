@@ -5,34 +5,34 @@ use Core\Session;
 
 
 ?>
-
+<?= Session::get('user')->id ?>
 <div class="container">
-    <h1>THIS IS USER PROFILE PAGE</h1>
     <?php if (isset($data['user'])) : ?>
-        <h1>User: <?= $data['user']->username; ?></h1>
-        <h1>Email: <?= $data['user']->email; ?></h1>
+    <div class="d-flex flex-wrap justify-content-center">
+        <h1><strong><?= $data['user']->username; ?></strong>'s profile page</h1>
+    </div>
     <?php endif; ?>
   <div class="container-fluid">
-    <div class="d-flex flex-wrap justify-content-start">
+    <div class="d-flex flex-wrap justify-content-center">
         <?php if (isset($data['galleries'])) : ?>
-            <table class="table table-hover table-bordered w-50">
+            <table class="table table-hover table-bordered w-70">
                 <thead>
-                <tr>
-                    <th scope="col">
-                        Gallery name
-                    </th>
-                </tr>
+                    <tr>
+                        <th scope="col">
+                            Gallery name
+                        </th>
+                    </tr>
                 </thead>
                 <tbody>
-        <?php foreach ($data['galleries'] as $gallery) : ?>
-                <tr>
-                    <th scope="row">
-                        <a class="mx-auto" href="http://localhost:8080/galleries/<?= $gallery->slug ?> ">
-                            <?= $gallery->name ?>
-                        </a>
-                    </th>
-                </tr>
-        <?php endforeach; ?>
+                <?php foreach ($data['galleries'] as $gallery) : ?>
+                    <tr>
+                        <th scope="row">
+                            <a class="mx-auto" href="http://localhost:8080/galleries/<?= $gallery->slug ?> ">
+                                <?= $gallery->name ?>
+                            </a>
+                        </th>
+                    </tr>
+                <?php endforeach; ?>
                 </tbody>
             </table>
         <?php endif; ?>

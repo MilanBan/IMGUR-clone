@@ -25,14 +25,14 @@ class GuestController extends Controller
         $this->renderView('Home', ['images' => $images]);
     }
 
-    public function show($slug)
-    {
-        var_dump('usao u show guest-ctrl');
-        $image = $this->imageM->guest_find(['slug', $slug]);
-        if ($image) {
-            return $this->renderView('Home', ['image' => $image]);
-        }
-    }
+//    public function show($slug)
+//    {
+//        var_dump('usao u show guest-ctrl');
+//        $image = $this->imageM->guest_find(['slug', $slug]);
+//        if ($image) {
+//            return $this->renderView('Home', ['image' => $image]);
+//        }
+//    }
 
 
 }

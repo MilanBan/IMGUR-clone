@@ -20,9 +20,34 @@ class GalleryController extends Controller
     public function show($slug)
     {
         var_dump('usao u show g-ctrl: slug='.$slug);
-        $gallery = $this->galleryM->findFromUser(['slug', $slug]) ?? null;
+        $gallery = $this->galleryM->find(['slug', $slug]) ?? null;
+        var_dump($gallery);
         $images = $this->imagesM->getAllFromGallery($gallery->id);
 
         return $this->renderView('gallery/show', ['gallery' => $gallery, 'images' => $images]);
+    }
+
+    public function edit($slug)
+    {
+        var_dump('usao u edit');
+        $gallery = $this->galleryM->find(['slug', $slug]);
+
+        return $this->renderView('gallery/edit', ['gallery' => $gallery]);
+    }
+
+    public function update($id)
+    {
+        var_dump('usao u update');
+
+        $gallery = $this->galleryM->find(['id', $id]);
+
+        $this->galleryM->name = trim($_POST['name']);;
+        $this->galleryM->description = trim($_POST['description']);;
+        $this->galleryM->hidden = (isset($_POST['hidden']) == '1' ? '1' : '0');;
+        $this->galleryM->nsfw = (isset($_POST['nsfw']) == '1' ? '1' : '0');
+
+        $this->galleryM->update($id);
+
+        return $this->redirect('galleries/'. $gallery->slug);
     }
 }

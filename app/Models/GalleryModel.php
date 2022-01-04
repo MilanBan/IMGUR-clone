@@ -25,16 +25,46 @@ class GalleryModel extends Model
         return $this->pdo->query($sql)->fetchAll();
     }
 
-    public function findFromUser(array $parameter)
+    public function find(array $parameter)
     {
         var_dump('usao u find GM');
 
-        $sql = sprintf("SELECT * FROM `gallery` WHERE `%s` = '%s' AND `user_id` = %s",
+        $sql = sprintf("SELECT * FROM `gallery` WHERE `%s` = '%s'",
             $parameter[0],
-            $parameter[1],
-            Session::get('user')->id
+            $parameter[1]
         );
+           $x = $this->pdo->query($sql)->fetch();
+        return  $x;
+    }
 
-        return $this->pdo->query($sql)->fetch();
+    public function update($id)
+    {
+        $data = [
+            'name' => $this->name,
+            'description' => $this->description,
+            'hidden' => $this->hidden,
+            'nsfw' => $this->nsfw
+        ];
+
+        $params = [];
+
+        foreach ($data as $k => $v) {
+            $params[] = "$k = :$k";
+        }
+
+        $sql = sprintf("UPDATE `gallery` SET %s WHERE id = %s",
+            implode(', ', $params),
+            ':id'
+        );
+        $data['id'] = $id;
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($data);
+            return true;
+        }catch (\PDOException $e){
+            return  false;
+        }
+
     }
 }

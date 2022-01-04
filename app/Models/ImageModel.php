@@ -32,7 +32,7 @@ class ImageModel extends Model
     {
 
         if (Session::get('user')){
-            $sql = "SELECT i.`file_name`, i.`slug`, u.`username` FROM `image` i left JOIN `user` u ON i.`user_id` = u.`id` WHERE u.`id` =  $id limit 10 offset 0";
+            $sql = "SELECT `file_name`, `slug` FROM `image` WHERE `user_id` =  $id limit 10 offset 0";
 
             return $this->pdo->query($sql)->fetchAll();
         }
@@ -40,8 +40,8 @@ class ImageModel extends Model
 
     public function getAllFromGallery($id)
     {
-        $user_Id = $this->pdo->query("SELECT `user_id` FROM `gallery` WHERE id = $id")->fetchColumn();
-
+var_dump($id);
+        $user_Id = $this->pdo->query("SELECT `user_id` FROM `gallery` WHERE `id` = $id")->fetchColumn();
         if (Session::get('user')->id == $user_Id) {
             $sql = "SELECT i.`file_name`, i.`slug` FROM `image` i INNER JOIN `image_gallery` ig ON i.`id` = ig.`image_id` WHERE ig.`gallery_id` =  $id limit 10 offset 0";
         }elseif (Session::get('user') && Session::get('user')->id !== $user_Id)
