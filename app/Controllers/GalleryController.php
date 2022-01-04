@@ -2,8 +2,10 @@
 
 namespace App\Controllers;
 
+use App\Helper;
 use App\Models\GalleryModel;
 use App\Models\ImageModel;
+use Core\Session;
 
 class GalleryController extends Controller
 {
@@ -25,6 +27,40 @@ class GalleryController extends Controller
         $images = $this->imagesM->getAllFromGallery($gallery->id);
 
         return $this->renderView('gallery/show', ['gallery' => $gallery, 'images' => $images]);
+    }
+
+    public function create()
+    {
+        if (Session::get('user')){
+            return $this->renderView('gallery/create');
+        }else{
+            return $this->redirect('');
+        }
+    }
+
+    public function store()
+    {
+        if (strtolower($_SERVER["REQUEST_METHOD"]) === "post") {
+            if (isset($_POST['name']) && isset($_POST['description'])) {
+                $_POST = filter_input_array(INPUT_POST, FILTER_SANITIZE_STRING);
+
+
+                    $this->galleryM->name = trim($_POST["name"]);
+                    $this->galleryM->description = trim($_POST["description"]);
+                    $this->galleryM->user_id = Session::get('user')->id;
+                    $this->galleryM->slug = Helper::slugify(trim($_POST["name"]).'-'.time());
+
+                $errors = $this->galleryM->validate();
+
+                if (count($errors)){
+                    http_response_code(422);
+                    $this->renderView('gallery/create', ['errors' => $errors, 'gallery' => $this->galleryM]);
+                }else{
+                    $this->galleryM->insert();
+                    $this->redirect('profile/'.Session::get('username'));
+                }
+            }
+        }
     }
 
     public function edit($slug)

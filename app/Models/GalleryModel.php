@@ -6,6 +6,9 @@ use Core\Session;
 
 class GalleryModel extends Model
 {
+    protected array $errors = [];
+    protected array $data;
+
     public function __construct()
     {
         parent::__construct();
@@ -73,4 +76,49 @@ class GalleryModel extends Model
         $this->db->delete('image_gallery', 'gallery_id', $id);
         $this->db->delete('gallery', 'id', $id);
     }
+
+    public function validate(): array
+    {
+        $this->errors = [];
+        $this->validateName();
+        $this->validateDescription();
+
+        return $this->errors;
+    }
+
+    private function validateName()
+    {
+        if (empty($this->name)){
+            $this->errors['name'] = 'Name is required';
+        }
+        if(strlen($this->name) < 2){
+            $this->errors['name'] =  'Name must contain at least 2 characters';
+        }
+        if ($this->pdo->query("SELECT `name` FROM `gallery` WHERE `name` = '$this->name'")->rowCount()){
+            $this->errors['name'] = 'A Gallery with this name already exists';
+        }
+    }
+
+    private function validateDescription()
+    {
+        if (empty($this->description)){
+            $this->errors['description'] = 'Description is required';
+        }
+        if(strlen($this->description) < 2){
+            $this->errors['description'] =  'Description must contain at least 2 characters';
+        }
+    }
+
+    public function insert()
+    {
+        $this->data = [
+            'user_id' => $this->user_id,
+            'name' => $this->name,
+            'description' => $this->description,
+            'slug' => $this->slug
+        ];
+
+        return $this->db->insert('gallery', $this->data);
+    }
+
 }

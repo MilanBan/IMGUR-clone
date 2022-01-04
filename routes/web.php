@@ -22,6 +22,8 @@ $router->get('/images/{$slug}', '\App\Controllers\ImageController@show');
 $router->get('/profile/{$username}', '\App\Controllers\ProfileController@index');
 
 // Gallery
+$router->get('/galleries/create', '\App\Controllers\GalleryController@create');
+$router->post('/galleries', '\App\Controllers\GalleryController@store');
 $router->get('/galleries/{$slug}/edit', '\App\Controllers\GalleryController@edit');
 $router->post('/galleries/{$id}/update', '\App\Controllers\GalleryController@update');
 $router->get('/galleries/{$slug}', '\App\Controllers\GalleryController@show');
