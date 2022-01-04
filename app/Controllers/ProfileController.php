@@ -2,46 +2,36 @@
 
 namespace App\Controllers;
 
-use App\Models\ImageModel;
+use App\Models\GalleryModel;
 use App\Models\UserModel;
 use Core\Session;
 
 class ProfileController extends Controller
 {
     private UserModel $userM;
-    private ImageModel $imageM;
+    private GalleryModel $galleryM;
 
     public function __construct()
     {
         parent::__construct();
         $this->userM = new UserModel();
-        $this->imageM = new ImageModel();
+        $this->galleryM = new GalleryModel();
     }
 
-    public function index($id)
+    public function index($username)
     {
-        var_dump('usao u index p-ctrl');
-        if ($id)
-        {
-            $user = $this->userM->find('user', ['id', $id]);
-            $images= $this->imageM->getAllFromUser($id) ?? null;
+        var_dump('usao u index p-ctrl: '.$username);
 
-        }else{
-            echo ' nije poslat id u profile crtl';
+        $user = $this->userM->find('user', ['username', Session::get('user')->username]);
+        if (!$user){
+            Session::set('error', 'User not found');
+            http_response_code(404);
+            $this->renderView('__404');
         }
 
-        return $this->renderView('Profile', ['user' => $user, 'images' => $images]);
+        $galleries = $this->galleryM->getAllFromUser($user->id) ?? null;
+
+        return $this->renderView('profile/show', ['user' => $user, 'galleries' => $galleries]);
     }
 
-    public function show($slug)
-    {
-
-        var_dump("usao u show p-crtl");
-        $image = $this->imageM->findFromUser(['slug', $slug]);
-
-        if (!$image){
-            echo 'nema slike';
-        }
-        return $this->renderView('Profile',['image' => $image]);
-    }
 }

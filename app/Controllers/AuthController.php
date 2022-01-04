@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helper;
 use App\Models\UserModel;
 use Core\Session;
 
@@ -44,7 +45,8 @@ class AuthController extends Controller
                     $user = $userM->insert();
                     Session::set('user', $user);
                     http_response_code(201);
-                    $this->redirect('profile/'. Session::get('user')->id);
+                    Session::set('username', Helper::encode($user->username));
+                    $this->redirect('profile/show'.Session::get('username'));
                 }
             }
         }
@@ -72,9 +74,9 @@ class AuthController extends Controller
                 }else{
                     $user = $userM->find('user', ['email', $userM->email]);
                     Session::set('user', $user);
-
+                    Session::set('username', Helper::encode($user->username));
                     http_response_code(200);
-                    $this->redirect('profile/'. Session::get('user')->id);
+                    $this->redirect('profile/show'. Session::get('username'));
                 }
             }
         }

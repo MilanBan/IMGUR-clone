@@ -52,6 +52,24 @@ class QueryBuilder
         return $this->pdo->query($sql)->fetchAll();
     }
 
+    public function delete(string $table, string $column, $id)
+    {
+        $sql = sprintf("DELETE FROM %s WHERE %s = %s",
+            $table,
+            $column,
+            $id
+        );
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+
+            return true;
+        }catch (PDOException $e){
+            return false;
+        }
+    }
+
 
 
 }
