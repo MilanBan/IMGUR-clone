@@ -21,7 +21,7 @@ class GalleryController extends Controller
     {
         var_dump('usao u show g-ctrl: slug='.$slug);
         $gallery = $this->galleryM->find(['slug', $slug]) ?? null;
-        var_dump($gallery);
+
         $images = $this->imagesM->getAllFromGallery($gallery->id);
 
         return $this->renderView('gallery/show', ['gallery' => $gallery, 'images' => $images]);
@@ -49,5 +49,23 @@ class GalleryController extends Controller
         $this->galleryM->update($id);
 
         return $this->redirect('galleries/'. $gallery->slug);
+    }
+
+    public function delete($id)
+    {
+        header('Content-Type: application/json');
+
+        $gallery = $this->galleryM->find(['id', $id]);
+        if (!$gallery)
+        {
+            echo json_encode(['error' => 'Gallery not exists']);
+
+            http_response_code(404);
+
+        }
+        $this->galleryM->delete($id);
+        http_response_code(200);
+
+
     }
 }

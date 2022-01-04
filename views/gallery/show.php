@@ -12,7 +12,7 @@ use Core\Session;
         <div class="btn-group d-flex justify-content-around m-5">
             <a class="btn btn-sm btn-warning" href="/galleries/<?= $data['gallery']->slug . '/edit' ?>">Edit</a>
             <?php if (Session::get('user')->id == $data['gallery']->user_id || Session::get('user')->role != 'moderator') : ?>
-                <a class="btn btn-sm btn-danger" href="#">X</a>
+                <a class="btn btn-sm btn-danger" type="button" id="delete-gallery" data-id="<?= $data['gallery']->id ?>">X</a>
             <?php endif; ?>
         </div>
     <?php endif; ?>

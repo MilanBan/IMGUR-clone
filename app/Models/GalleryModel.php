@@ -67,4 +67,10 @@ class GalleryModel extends Model
         }
 
     }
+
+    public function delete($id)
+    {
+        $this->db->delete('image_gallery', 'gallery_id', $id);
+        $this->db->delete('gallery', 'id', $id);
+    }
 }
