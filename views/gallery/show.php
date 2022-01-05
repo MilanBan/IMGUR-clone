@@ -10,9 +10,12 @@ use Core\Session;
     <p class="text-center m-3"><?= $data['gallery']->description; ?></p>
     <?php if (Session::get('user')->id == $data['gallery']->user_id || in_array(Session::get('user')->role, ['moderator', 'admin'])) : ?>
         <div class="btn-group d-flex justify-content-around m-5">
-            <a class="btn btn-sm btn-warning" href="/galleries/<?= $data['gallery']->slug . '/edit' ?>">Edit</a>
+            <?php if (Session::get('user')->id == $data['gallery']->user_id) : ?>
+                <a class="btn btn-sm btn-success" href="/galleries/<?= $data['gallery']->id ?>/images/create">Add Image</a>
+            <?php endif; ?>
+                <a class="btn btn-sm btn-warning" href="/galleries/<?= $data['gallery']->slug . '/edit' ?>">Edit</a>
             <?php if (Session::get('user')->id == $data['gallery']->user_id || Session::get('user')->role != 'moderator') : ?>
-                <a class="btn btn-sm btn-danger" type="button" id="delete-gallery" data-id="<?= $data['gallery']->id ?>">X</a>
+                <a class="btn btn-sm btn-danger" type="button" id="delete-gallery" data-id="<?= $data['gallery']->id ?>">Delete</a>
             <?php endif; ?>
         </div>
     <?php endif; ?>

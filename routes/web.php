@@ -16,7 +16,9 @@ $router->post('/login', '\App\Controllers\AuthController@login');
 $router->get('/logout', '\App\Controllers\AuthController@logout');
 
 // Image
+$router->get('/galleries/{$id}/images/create', '\App\Controllers\ImageController@create');
 $router->get('/images/{$slug}', '\App\Controllers\ImageController@show');
+$router->post('/images', '\App\Controllers\ImageController@store');
 
 // Profile
 $router->get('/profile/{$username}', '\App\Controllers\ProfileController@index');
