@@ -76,10 +76,42 @@ class ImageModel extends Model
         $data = [
             'user_id' => $this->user_id,
             'file_name' => $this->file_name,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'hidden' => $this->hidden,
+            'nsfw' => $this->nsfw
         ];
 
         $image_id = $this->db->insert('image', $data);
         $this->db->insert('image_gallery', ['image_id' => $image_id, 'gallery_id' => $gallery_id]);
+    }
+
+    public function update($id)
+    {
+        $data = [
+            'slug' => $this->slug,
+            'hidden' => $this->hidden,
+            'nsfw' => $this->nsfw
+        ];
+
+        $params = [];
+
+        foreach ($data as $k => $v) {
+            $params[] = "$k = :$k";
+        }
+
+        $sql = sprintf("UPDATE `image` SET %s WHERE id = %s",
+            implode(', ', $params),
+            ':id'
+        );
+
+        $data['id'] = $id;
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute($data);
+            return true;
+        } catch (\PDOException $e) {
+            return false;
+        }
     }
 }

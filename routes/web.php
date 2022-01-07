@@ -17,8 +17,10 @@ $router->get('/logout', '\App\Controllers\AuthController@logout');
 
 // Image
 $router->get('/galleries/{$id}/images/create', '\App\Controllers\ImageController@create');
+$router->get('/images/{$slug}/edit', '\App\Controllers\ImageController@edit');
 $router->get('/images/{$slug}', '\App\Controllers\ImageController@show');
 $router->post('/images', '\App\Controllers\ImageController@store');
+$router->post('/images/{$id}/update', '\App\Controllers\ImageController@update');
 
 // Profile
 $router->get('/profile/{$username}', '\App\Controllers\ProfileController@index');

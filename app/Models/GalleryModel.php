@@ -115,7 +115,9 @@ class GalleryModel extends Model
             'user_id' => $this->user_id,
             'name' => $this->name,
             'description' => $this->description,
-            'slug' => $this->slug
+            'slug' => $this->slug,
+            'hidden' => $this->hidden,
+            'nsfw' => $this->nsfw
         ];
 
         return $this->db->insert('gallery', $this->data);
