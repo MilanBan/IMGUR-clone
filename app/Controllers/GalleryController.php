@@ -3,6 +3,7 @@
 namespace App\Controllers;
 
 use App\Helper;
+use App\Models\CommentModel;
 use App\Models\GalleryModel;
 use App\Models\ImageModel;
 use Core\Session;
@@ -11,12 +12,14 @@ class GalleryController extends Controller
 {
     private GalleryModel $galleryM;
     private ImageModel $imagesM;
+    private CommentModel $commentM;
 
     public function __construct()
     {
         parent::__construct();
         $this->galleryM = new GalleryModel();
         $this->imagesM = new ImageModel();
+        $this->commentM = new CommentModel();
     }
 
     public function show($slug)
@@ -26,7 +29,9 @@ class GalleryController extends Controller
 
         $images = $this->imagesM->getAllFromGallery($gallery->id);
 
-        return $this->renderView('gallery/show', ['gallery' => $gallery, 'images' => $images]);
+        $comments = $this->commentM->getAll('gallery', $gallery->id);
+
+        return $this->renderView('gallery/show', ['gallery' => $gallery, 'images' => $images, 'comments' => $comments]);
     }
 
     public function create()
