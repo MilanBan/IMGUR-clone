@@ -114,4 +114,10 @@ class ImageModel extends Model
             return false;
         }
     }
+
+    public function delete($id)
+    {
+        $this->db->delete('image_gallery', 'image_id', $id);
+        $this->db->delete('image', 'id', $id);
+    }
 }

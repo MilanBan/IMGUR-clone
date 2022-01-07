@@ -77,7 +77,25 @@ class ImageController extends Controller
         }else {
             $this->renderView('__403'); //TODO: forbidden view
         }
+    }
 
+    public function delete($id)
+    {
+
+        header('Content-Type: application/json');
+
+        $image = $this->imageM->findImage(['id', $id]);
+
+
+        if (!$image)
+        {
+            echo json_encode(['error' => 'Image not exists']);
+
+            http_response_code(404);
+        }
+
+        $this->imageM->delete($id);
+        http_response_code(200);
 
 
     }
