@@ -30,6 +30,6 @@ use Core\Session;
         <label class="form-check-label" for="nsfw">NSFW</label>
       </div>
      </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">Update</button>
  </form>
 </div>
