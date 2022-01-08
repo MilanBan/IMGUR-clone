@@ -1,7 +1,7 @@
 <?php
 
 use Core\Session;
-
+var_dump(Session::get('user')->role);
 ?>
 
 <div class="container">
@@ -71,9 +71,21 @@ use Core\Session;
                     <?php foreach ($data['users'] as $user) : ?>
                         <tr>
                             <th scope="row">
-                                <a class="mx-auto" href="http://localhost:8080/profile/<?= \App\Helper::encode($user->username) ?> ">
-                                    <?= $user->username ?>
-                                </a>
+                                <div class="container">
+                                    <div class="row justify-content-between">
+
+                                    <a class="col-4" href="http://localhost:8080/profile/<?= \App\Helper::encode($user->username) ?> ">
+                                        <?= $user->username ?>
+                                    </a>
+                                        <?php if(Session::get('user')->role == 'admin') : ?>
+                                    <a class="btn btn-warning btn-sm col-4" href="http://localhost:8080/profile/administration/<?= $user->id ?>" >
+                                        Change Role (<small><?= $user->role ?></small>)
+                                    </a>
+                                        <?php endif; ?>
+
+                                    </div>
+                                </div>
+
                             </th>
                         </tr>
                     <?php endforeach; ?>

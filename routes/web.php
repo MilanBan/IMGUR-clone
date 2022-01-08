@@ -23,6 +23,8 @@ $router->post('/images', '\App\Controllers\ImageController@store');
 $router->post('/images/{$id}/update', '\App\Controllers\ImageController@update');
 $router->delete('/images/{$id}', '\App\Controllers\ImageController@delete');
 
+$router->get('/profile/administration/{$id}', '\App\Controllers\UserController@edit');
+$router->post('/profile/administration/{$id}', '\App\Controllers\UserController@update');
 // Profile
 $router->get('/profile/{$username}', '\App\Controllers\ProfileController@index');
 
@@ -41,5 +43,6 @@ $router->post('/comments', '\App\Controllers\CommentController@store');
 $router->get('/', '\App\Controllers\GuestController@index');
 $router->get('/imgur/galleries/', '\App\Controllers\GuestController@galleries');
 $router->get('/imgur/profiles/', '\App\Controllers\GuestController@profiles');
+
 
 $router->run();

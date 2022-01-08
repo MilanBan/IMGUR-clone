@@ -29,7 +29,6 @@ class Controller
     public function redirect($view)
     {
         header('Location: ' . ROOT_URL . "/$view");
-
     }
 
     public function refresh()

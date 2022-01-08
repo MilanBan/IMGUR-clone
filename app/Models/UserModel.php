@@ -44,13 +44,12 @@ class UserModel extends Model
 
     public function find(string $table, array $parameter)
     {
-
         return $this->db->find($table, $parameter);
     }
 
     public function getAll()
     {
-        $sql = "SELECT `username` FROM `user` LIMIT 10";
+        $sql = "SELECT `id`, `username`, `role` FROM `user` LIMIT 10";
         return $this->pdo->query($sql);
     }
 
@@ -129,6 +128,22 @@ class UserModel extends Model
         }
         if ($this->password_confirm !== $this->password){
             $this->errors['password_confirm'] = 'Password did not match. Please try again.';
+        }
+    }
+
+    public function update($id)
+    {
+        $sql = sprintf("UPDATE `user` SET `role` = '%s'  WHERE `id` = %s",
+            $this->role,
+            $id
+        );
+
+        try {
+            $stmt = $this->pdo->prepare($sql);
+            $stmt->execute();
+            return true;
+        } catch (\PDOException $e) {
+            return $e;
         }
     }
 
