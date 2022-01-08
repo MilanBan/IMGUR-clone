@@ -46,3 +46,16 @@ use Core\Session;
         <?php endif; ?>
     </div>
 </div>
+<div class="container">
+<form method="post" action="/comments">
+    <input type="hidden" name="gallery_id" value="<?= $data['gallery']->id ?>">
+    <?php if (Session::get('user')->id) : ?>
+        <div class="form-group mb-3">
+            <textarea class="form-control" name="comment" id="exampleFormControlTextarea1" rows="3" placeholder="Leave a comment.."></textarea>
+        </div>
+        <div class="form-group mb-3">
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div>
+    <?php endif; ?>
+</form>
+</div>

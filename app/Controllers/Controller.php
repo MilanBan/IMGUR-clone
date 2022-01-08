@@ -31,4 +31,9 @@ class Controller
         header('Location: ' . ROOT_URL . "/$view");
 
     }
+
+    public function refresh()
+    {
+        header('Location: '.$_SERVER['HTTP_REFERER']);
+    }
 }

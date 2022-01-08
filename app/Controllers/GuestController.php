@@ -6,7 +6,6 @@ use App\Models\GalleryModel;
 use App\Models\ImageModel;
 use App\Models\UserModel;
 use Core\Session;
-use mysql_xdevapi\Exception;
 
 class GuestController extends Controller
 {
@@ -33,6 +32,10 @@ class GuestController extends Controller
 
     public function galleries()
     {
+        if (!Session::get('user')){
+            $this->redirect('');
+        }
+
         $galleries = $this->galleryM->getAllFromUser(0);
         $cover = [];
 
@@ -45,6 +48,9 @@ class GuestController extends Controller
 
     public function profiles()
     {
+        if (!Session::get('user')){
+            $this->redirect('');
+        }
         $users = $this->userM->getAll();
 
         $this->renderView('Home', ['users' => $users]);

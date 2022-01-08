@@ -18,4 +18,16 @@ class CommentModel extends Model
             return $this->pdo->query("SELECT comment.`comment`, user.`username`, comment.`id` FROM `comment` INNER JOIN `user` ON comment.`user_id` = user.`id` WHERE comment.`image_id` = '$id' ORDER BY comment.`id` DESC")->fetchAll();
         }
     }
+
+    public function insert()
+    {
+        $data = [
+            'user_id' => $this->user_id,
+            'comment' => $this->comment,
+            'gallery_id' => $this->gallery_id,
+            'image_id' => $this->image_id
+        ];
+
+        return $this->db->insert('comment', $data);
+    }
 }
