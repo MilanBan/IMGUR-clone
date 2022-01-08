@@ -25,13 +25,17 @@
                     <a class="nav-link" href="/imgur/profiles">Profiles </a>
                 </li>
             <?php endif; ?>
-
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <?php if (\Core\Session::get('user')): ?>
                 <div class="dropdown">
                     <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         <?= \Core\Session::get('user')->username ?>
+                        <?php if(\Core\Session::get('user')->role == 'admin') : ?>
+                            <small>(A)</small>
+                        <?php elseif (\Core\Session::get('user')->role == 'moderator') : ?>
+                            <small>(M)</small>
+                        <?php endif; ?>
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                         <a class="dropdown-item" href="/profile/<?= \Core\Session::get('username'); ?>">Profile </a>
