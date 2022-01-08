@@ -48,6 +48,12 @@ class UserModel extends Model
         return $this->db->find($table, $parameter);
     }
 
+    public function getAll()
+    {
+        $sql = "SELECT `username` FROM `user` LIMIT 10";
+        return $this->pdo->query($sql);
+    }
+
 
     public function validate($mode = []): array
     {

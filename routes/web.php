@@ -36,5 +36,7 @@ $router->delete('/galleries/{$id}', '\App\Controllers\GalleryController@delete')
 
 // Guest
 $router->get('/', '\App\Controllers\GuestController@index');
+$router->get('/imgur/galleries/', '\App\Controllers\GuestController@galleries');
+$router->get('/imgur/profiles/', '\App\Controllers\GuestController@profiles');
 
 $router->run();

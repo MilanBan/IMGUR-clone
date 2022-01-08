@@ -29,3 +29,20 @@ use Core\Session;
         <?php endif; ?>
     </div>
 </div>
+<div class="d-flex flex-wrap justify-content-start">
+    <div class="flex-column">
+        <div class="flex-column p-3 mb-5">
+            <h2>Comments:</h2>
+        </div>
+        <?php if (isset($data['comments'])) : ?>
+            <?php foreach ($data['comments'] as $comment) : ?>
+                <div class="d-flex shadow-lg p-3 mb-5 bg-body rounded">
+                    <div class="d-flex flex-column bd-highlight mb-3">
+                        <h5 class="p-3"><?= $comment->username ?></h5>
+                        <p class="m-3"><?= $comment->comment ?></p>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </div>
+</div>

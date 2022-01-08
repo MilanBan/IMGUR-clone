@@ -46,7 +46,7 @@ class AuthController extends Controller
                     Session::set('user', $user);
                     http_response_code(201);
                     Session::set('username', Helper::encode($user->username));
-                    $this->redirect('profile/show'.Session::get('username'));
+                    $this->redirect('profile/'.Session::get('username'));
                 }
             }
         }
@@ -76,7 +76,7 @@ class AuthController extends Controller
                     Session::set('user', $user);
                     Session::set('username', Helper::encode($user->username));
                     http_response_code(200);
-                    $this->redirect('profile/show'. Session::get('username'));
+                    $this->redirect('profile/'. Session::get('username'));
                 }
             }
         }

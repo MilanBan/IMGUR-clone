@@ -11,11 +11,13 @@ use Core\Session;
     <div class="d-flex flex-wrap justify-content-center">
         <h1><strong><?= $data['user']->username; ?></strong>'s profile page</h1>
     </div>
-    <div class="container my-5 min-content-height">
-         <div class="d-flex justify-content-md-center">
-             <a class="btn btn-sm btn-primary" type="button" href="/galleries/create">Add Gallery</a>
-         </div>
-    </div>
+        <?php if (Session::get('user')->id == $data['user']->id) : ?>
+            <div class="container my-5 min-content-height">
+                <div class="d-flex justify-content-md-center">
+                    <a class="btn btn-sm btn-primary" type="button" href="/galleries/create">Add Gallery</a>
+                </div>
+            </div>
+        <?php endif; ?>
     <?php endif; ?>
   <div class="container-fluid">
     <div class="d-flex flex-wrap justify-content-center">

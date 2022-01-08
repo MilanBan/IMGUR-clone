@@ -2,18 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Models\GalleryModel;
 use App\Models\ImageModel;
+use App\Models\UserModel;
 use Core\Session;
 use mysql_xdevapi\Exception;
 
 class GuestController extends Controller
 {
-    public ImageModel $imageM;
+    private ImageModel $imageM;
+    private GalleryModel $galleryM;
+    private UserModel $userM;
 
     public function __construct()
     {
         parent::__construct();
         $this->imageM = new ImageModel();
+        $this->galleryM = new GalleryModel();
+        $this->userM = new UserModel();
     }
 
     public function index()
@@ -25,14 +31,24 @@ class GuestController extends Controller
         $this->renderView('Home', ['images' => $images]);
     }
 
-//    public function show($slug)
-//    {
-//        var_dump('usao u show guest-ctrl');
-//        $image = $this->imageM->guest_find(['slug', $slug]);
-//        if ($image) {
-//            return $this->renderView('Home', ['image' => $image]);
-//        }
-//    }
+    public function galleries()
+    {
+        $galleries = $this->galleryM->getAllFromUser(0);
+        $cover = [];
+
+        foreach ($galleries as $gallery){
+            $cover[$gallery->id] = $this->imageM->getCover($gallery->id);
+
+        }
+        $this->renderView('Home', ['galleries' => $galleries, 'cover' => $cover]);
+    }
+
+    public function profiles()
+    {
+        $users = $this->userM->getAll();
+
+        $this->renderView('Home', ['users' => $users]);
+    }
 
 
 }
