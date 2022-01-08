@@ -13,9 +13,7 @@ use Core\Session;
         </div>
         <div class="form-group mb-3">
             <label for="description" class="form-label">Description</label>
-            <textarea class="form-control" name="description" rows="3">
-                <?= $data['gallery']->description ?>
-            </textarea>
+            <textarea class="form-control" name="description"><?= $data['gallery']->description ?></textarea>
         </div>
     <?php endif; ?>
      <div class="form-check form-check-inline">

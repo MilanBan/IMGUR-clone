@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helper;
 use App\Models\GalleryModel;
 use App\Models\UserModel;
 use Core\Session;
@@ -22,7 +23,7 @@ class ProfileController extends Controller
     {
         var_dump('usao u index p-ctrl: '.$username);
 
-        $user = $this->userM->find('user', ['username', Session::get('user')->username]);
+        $user = $this->userM->find('user', ['username', Helper::decode($username)]);
         if (!$user){
             Session::set('error', 'User not found');
             http_response_code(404);

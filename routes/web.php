@@ -34,7 +34,12 @@ $router->post('/galleries/{$id}/update', '\App\Controllers\GalleryController@upd
 $router->get('/galleries/{$slug}', '\App\Controllers\GalleryController@show');
 $router->delete('/galleries/{$id}', '\App\Controllers\GalleryController@delete');
 
+//Comment
+$router->post('/comments', '\App\Controllers\CommentController@store');
+
 // Guest
 $router->get('/', '\App\Controllers\GuestController@index');
+$router->get('/imgur/galleries/', '\App\Controllers\GuestController@galleries');
+$router->get('/imgur/profiles/', '\App\Controllers\GuestController@profiles');
 
 $router->run();

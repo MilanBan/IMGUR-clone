@@ -3,17 +3,20 @@
 namespace App\Controllers;
 
 use App\Helper;
+use App\Models\CommentModel;
 use App\Models\ImageModel;
 use Core\Session;
 
 class ImageController extends Controller
 {
     private ImageModel $imageM;
+    private CommentModel $commentM;
 
     public function __construct()
     {
         parent::__construct();
         $this->imageM = new ImageModel();
+        $this->commentM = new CommentModel();
     }
 
     public function show($slug)
@@ -21,7 +24,9 @@ class ImageController extends Controller
         var_dump('usao u show image');
         $image = $this->imageM->findImage(['slug', $slug]);
 
-        $this->renderView('image/show', ['image' => $image]);
+        $comments = $this->commentM->getAll('image', $image->id);
+
+        $this->renderView('image/show', ['image' => $image, 'comments' => $comments]);
     }
 
     public function create($id)

@@ -10,7 +10,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-md navbar-light bg-light">
-    <a class="navbar-brand" href="/">IMGUR</a>
+    <a class="navbar-brand" href="/"><strong>IMGUR</strong></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -18,20 +18,26 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav mr-auto">
             <?php if (\Core\Session::get('user')): ?>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/profile/<?= \Core\Session::get('username'); ?>">Profile <span class="sr-only">(current)</span></a>
+                <li class="nav-item <?= ($_SERVER['REQUEST_URI'] == '/imgur/galleries') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/imgur/galleries">Galleries </a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/galleries">Galleries</a>
+                <li class="nav-item <?= ($_SERVER['REQUEST_URI'] == '/imgur/profiles') ? 'active' : '' ?>">
+                    <a class="nav-link" href="/imgur/profiles">Profiles </a>
                 </li>
             <?php endif; ?>
 
         </ul>
         <ul class="navbar-nav my-2 my-lg-0">
             <?php if (\Core\Session::get('user')): ?>
-            <li class="nav-item active">
-                <a class="nav-link" href="/logout">Logout <span class="sr-only">(current)</span></a>
-            </li>
+                <div class="dropdown">
+                    <button class="btn btn-light btn-sm dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <?= \Core\Session::get('user')->username ?>
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="/profile/<?= \Core\Session::get('username'); ?>">Profile </a>
+                        <a class="dropdown-item" href="/logout">Logout</a>
+                    </div>
+                </div>
             <?php else: ?>
                 <li class="nav-item active">
                     <?php if ($_SERVER['REQUEST_URI'] !== '/login'): ?>
