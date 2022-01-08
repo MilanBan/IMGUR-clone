@@ -6,6 +6,7 @@ use App\Helper;
 use App\Models\CommentModel;
 use App\Models\GalleryModel;
 use App\Models\ImageModel;
+use App\Models\ModeratorLoggingModel;
 use Core\Session;
 
 class GalleryController extends Controller
@@ -13,6 +14,7 @@ class GalleryController extends Controller
     private GalleryModel $galleryM;
     private ImageModel $imagesM;
     private CommentModel $commentM;
+    private ModeratorLoggingModel $moderatorLogM;
 
     public function __construct()
     {
@@ -20,6 +22,8 @@ class GalleryController extends Controller
         $this->galleryM = new GalleryModel();
         $this->imagesM = new ImageModel();
         $this->commentM = new CommentModel();
+        $this->moderatorLogM = new ModeratorLoggingModel();
+
     }
 
     public function show($slug)
@@ -88,6 +92,19 @@ class GalleryController extends Controller
         $this->galleryM->nsfw = (isset($_POST['nsfw']) == '1' ? '1' : '0');
 
         $this->galleryM->update($id);
+
+        if (Session::get('user')->id !== $gallery->user_id && Session::get('user')->role == 'moderator')
+        {
+
+            if ($gallery->hidden !== $this->galleryM->hidden) {
+                $hidden = "hidden as ".$this->galleryM->hidden;
+            }
+            if ($gallery->nsfw !== $this->galleryM->nsfw){
+                $nsfw = "nsfw as ".$this->galleryM->nsfw;
+            }
+            $this->moderatorLogM->msg = "Moderator ". Session::get('user')->username ." set gallery ". $gallery->name ." ".$hidden." ".$nsfw ;
+            $this->moderatorLogM->logging();
+        }
 
         return $this->redirect('galleries/'. $gallery->slug);
     }

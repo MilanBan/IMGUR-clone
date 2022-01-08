@@ -5,18 +5,21 @@ namespace App\Controllers;
 use App\Helper;
 use App\Models\CommentModel;
 use App\Models\ImageModel;
+use App\Models\ModeratorLoggingModel;
 use Core\Session;
 
 class ImageController extends Controller
 {
     private ImageModel $imageM;
     private CommentModel $commentM;
+    private ModeratorLoggingModel $moderatorLogM;
 
     public function __construct()
     {
         parent::__construct();
         $this->imageM = new ImageModel();
         $this->commentM = new CommentModel();
+        $this->moderatorLogM = new ModeratorLoggingModel();
     }
 
     public function show($slug)
@@ -76,7 +79,18 @@ class ImageController extends Controller
             $this->imageM->nsfw = (isset($_POST['nsfw']) == '1' ? '1' : '0');
 
             $this->imageM->update($id);
+            if (Session::get('user')->id !== $image->user_id && Session::get('user')->role == 'moderator')
+            {
 
+                if ($image->hidden !== $this->imageM->hidden) {
+                    $hidden = "hidden as ".$this->imageM->hidden;
+                }
+                if ($image->nsfw !== $this->imageM->nsfw){
+                    $nsfw = "nsfw as ".$this->imageM->nsfw;
+                }
+                    $this->moderatorLogM->msg = "Moderator ". Session::get('user')->username ." set image ". $image->file_name ." ".$hidden." ".$nsfw ;
+                    $this->moderatorLogM->logging();
+            }
             return $this->redirect('/profile/'.Session::get('username'));
 
         }else {
