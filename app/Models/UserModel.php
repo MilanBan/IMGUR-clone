@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Core\App;
+use Core\Session;
 
 class UserModel extends Model
 {
@@ -49,7 +50,12 @@ class UserModel extends Model
 
     public function getAll()
     {
-        $sql = "SELECT `id`, `username`, `role` FROM `user` LIMIT 10";
+        $sql = null;
+        if (in_array(Session::get('user')->role, ['admin', 'moderator'])){
+            $sql = "SELECT `id`, `username`, `role` FROM `user` LIMIT 10";
+        }else{
+            $sql = "SELECT `id`, `username`, `role` FROM `user` where `active` = 1 and `nsfw` = 0 LIMIT 10";
+        }
         return $this->pdo->query($sql);
     }
 
@@ -133,17 +139,32 @@ class UserModel extends Model
 
     public function update($id)
     {
-        $sql = sprintf("UPDATE `user` SET `role` = '%s'  WHERE `id` = %s",
-            $this->role,
-            $id
+        $data = [
+            'active' => $this->active,
+            'nsfw' => $this->nsfw,
+            'role' => $this->role,
+        ];
+
+        $params = [];
+
+        foreach ($data as $k => $v) {
+            $params[] = "$k = :$k";
+        }
+
+        $sql = sprintf("UPDATE `user` SET %s WHERE id = %s",
+            implode(', ', $params),
+            ':id'
         );
+
+        $data['id'] = $id;
 
         try {
             $stmt = $this->pdo->prepare($sql);
-            $stmt->execute();
+
+            $stmt->execute($data);
             return true;
         } catch (\PDOException $e) {
-            return $e;
+            return false;
         }
     }
 

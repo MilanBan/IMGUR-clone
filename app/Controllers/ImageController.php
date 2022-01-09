@@ -75,7 +75,7 @@ class ImageController extends Controller
 
         if (Session::get('user')->id == $image->user_id || in_array(Session::get('user')->role, ['admin', 'moderator'])) {
             $this->imageM->slug = trim($_POST['slug']);;
-            $this->imageM->hidden = (isset($_POST['hidden']) == '1' ? '1' : '0');;
+            $this->imageM->hidden = (isset($_POST['hidden']) == '1' ? '1' : '0');
             $this->imageM->nsfw = (isset($_POST['nsfw']) == '1' ? '1' : '0');
 
             $this->imageM->update($id);

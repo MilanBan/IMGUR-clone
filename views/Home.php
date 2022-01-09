@@ -77,7 +77,7 @@ var_dump(Session::get('user')->role);
                                     <a class="col-4" href="http://localhost:8080/profile/<?= \App\Helper::encode($user->username) ?> ">
                                         <?= $user->username ?>
                                     </a>
-                                        <?php if(Session::get('user')->role == 'admin') : ?>
+                                        <?php if(in_array(Session::get('user')->role, ['admin', 'moderator'])) : ?>
                                     <a class="btn btn-warning btn-sm col-4" href="http://localhost:8080/profile/administration/<?= $user->id ?>" >
                                         Change Role (<small><?= $user->role ?></small>)
                                     </a>
